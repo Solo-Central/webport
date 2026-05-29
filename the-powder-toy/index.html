@@ -73,7 +73,7 @@
 })();
 
 if ('serviceWorker' in navigator && !self.crossOriginIsolated) {
-  navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/Solo-Central/webport@main/the-powder-toy/solocentral.org/register-sw.js').then(function (reg) {
+  navigator.serviceWorker.register(new URL('./solocentral.org/register-sw.js', location.href).href).then(function (reg) {
     if (reg.installing) {
       reg.installing.addEventListener('statechange', function (e) {
         if (e.target.state === 'activated') location.reload();
@@ -91,7 +91,7 @@ var _loadedMB  = 0;
 var _totalMB   = 0;
 
 function setStatus(loadedMB, totalMB) {
-  if (totalMB > 0) {
+  if (totalMB > 0 && loadedMB <= totalMB) {
     _statEl.textContent = 'port by aubree.lat | LOADING... ' + loadedMB.toFixed(2) + 'MB/' + totalMB.toFixed(2) + 'MB';
   } else if (loadedMB > 0) {
     _statEl.textContent = 'port by aubree.lat | LOADING... ' + loadedMB.toFixed(2) + 'MB';
