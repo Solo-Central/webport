@@ -60,6 +60,18 @@
 <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
 
 <script>
+(function () {
+  var _W = window.Worker;
+  window.Worker = function (url, opts) {
+    if (typeof url === 'string' && url.indexOf(location.origin) !== 0) {
+      var blob = new Blob(['importScripts(' + JSON.stringify(url) + ')'], { type: 'application/javascript' });
+      url = URL.createObjectURL(blob);
+    }
+    return new _W(url, opts);
+  };
+  window.Worker.prototype = _W.prototype;
+})();
+
 if ('serviceWorker' in navigator && !self.crossOriginIsolated) {
   navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/Solo-Central/webport@main/the-powder-toy/solocentral.org/register-sw.js').then(function (reg) {
     if (reg.installing) {
