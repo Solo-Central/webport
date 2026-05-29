@@ -73,7 +73,7 @@
 })();
 
 if ('serviceWorker' in navigator && !self.crossOriginIsolated) {
-  navigator.serviceWorker.register(new URL('./solocentral.org/register-sw.js', location.href).href).then(function (reg) {
+  navigator.serviceWorker.register(new URL('./coi-sw.js', location.href).href).then(function (reg) {
     if (reg.installing) {
       reg.installing.addEventListener('statechange', function (e) {
         if (e.target.state === 'activated') location.reload();

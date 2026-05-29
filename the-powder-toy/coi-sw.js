@@ -1,5 +1,5 @@
 
-// this and ./coi-sw.js is the same, just a easier name ig idk
+// this and ./solocentral.org/register-sw.js is the same, just a easier name ig idk
 // - qatual
 
 self.addEventListener('install', () => self.skipWaiting());
