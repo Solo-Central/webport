@@ -1,0 +1,171 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M2Y60WTE1D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M2Y60WTE1D');
+</script>
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <base href="http://cdn.jsdelivr.net/gh/Solo-Central/webport@main/1v1lol/"/>
+    <meta charset="utf-8">
+    <title>1v1.LOL</title>  
+    <script>
+   (function() {
+    var OriginalWebSocket = window.WebSocket;
+    window.WebSocket = function(url, protocols) {
+        var urlString = (typeof url === 'string') ? url : url.toString();
+        if (urlString.indexOf('exitgames') !== -1) {
+            var customServerUrl = 'wss://ws.onecloudcdn.site/ns';
+            return new OriginalWebSocket(customServerUrl, protocols);
+        }
+        return new OriginalWebSocket(url, protocols);
+    }; 
+    window.WebSocket.prototype = OriginalWebSocket.prototype;
+    window.WebSocket.CONNECTING = 0;
+    window.WebSocket.OPEN = 1;
+    window.WebSocket.CLOSING = 2;
+    window.WebSocket.CLOSED = 3;
+})();
+    </script>
+    <script type="text/javascript" async="" src="js/372_49986_1v1.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/mobileRedirect.js"></script>
+    <script src="js/fullscreen.js"></script>
+    <script>
+      var gameLoaded = false;
+      window.addEventListener("beforeunload", function (e) {
+        if (!gameLoaded || !lockedOccured) return null;
+        var confirmationMessage = "Are you sure you want to leave? ";
+        (e || window.event).returnValue = confirmationMessage; 
+        return confirmationMessage; 
+      });
+      window.alert = function (e) {
+        console.log(e);
+      };
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    </head>
+
+<body>
+    <div id="gameContainer"></div>
+    <div id="loader">
+      <img class="logo" src="images/logo.png">
+      <div class="spinner"></div>
+      <div class="progress">
+        <div class="full"></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/st39/sdk@main/api.js"></script>  
+    <script id="unity-loader" src="js/UnityLoader.js"></script>
+    <script>
+	 const muteConsole = true;
+     if (muteConsole) { console.log = console.warn = console.error = console.info = console.debug = ()=>{}; }
+      var gameJsonUrl = "WebGL.json"; 
+      var hostname = window.location.hostname;
+      if (hostname.indexOf("dev1v1") >= 0 || hostname.indexOf("dev.1v1") >= 0 || hostname.indexOf("test1v1") >= 0 || hostname.indexOf("test.1v1") >= 0) {
+        let urlParams = new URLSearchParams(window.location.search);
+        let queryParam = urlParams.get("version");
+
+        if (queryParam !== undefined && queryParam !== null) {
+          gameJsonUrl = gameJsonUrl.replace(/[0-9][0-9]+/i, queryParam);
+        }
+      }
+      var gameInstance = UnityLoader.instantiate("gameContainer", gameJsonUrl, { onProgress: UnityProgress });
+
+      window.unityInstance = gameInstance;
+      var lockedOccured = false;
+
+      function UnityProgress(gameInstance, progress) {
+        if (!gameInstance.Module) {
+          return;
+        }
+        const loader = document.querySelector("#loader");
+        if (!gameInstance.progress) {
+          const progress = document.querySelector("#loader .progress");
+          progress.style.display = "block";
+          gameInstance.progress = progress.querySelector(".full");
+          loader.querySelector(".spinner").style.display = "none";
+        }
+        gameInstance.progress.style.transform = `scaleX(${progress})`;
+        if (progress === 1 && !gameInstance.removeTimeout) {
+          loader.style.display = "none";
+          gameLoaded = true;
+        }
+      }
+
+      document.onkeydown = function (e) {
+        if (e.altKey || e.ctrlKey || e.key == "F1" || e.key == "F2" || e.key == "F3" || e.key == "F4") {
+          e.preventDefault();
+        }
+      };
+
+      document.onmouseup = function (e) {
+        e.preventDefault();
+      };
+
+      document.addEventListener("pointerlockchange", lockChangeAlert, false);
+      document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
+
+      function lockChangeAlert() {
+        if (!lockedOccured && document.pointerLockElement) lockedOccured = true;
+        if (!document.pointerLockElement && lockedOccured) {
+          lockedOccured = false;
+          gameInstance.SendMessage("Pause Menu", "OnCursorUnlocked");
+        }
+      }
+      
+function injectAdByWindowSize() {}
+function showAds() {}
+function hideAds() {}
+function refresh() {}
+
+function requestNewAd() {
+    unityAdFinishedCallback();
+}
+
+function unityAdFinishedCallback() {
+    try {
+        if (window.unityInstance) {
+            window.unityInstance.SendMessage('MainMenuManagers', 'OnWebCallback');
+        } else if (gameInstance) {
+            gameInstance.SendMessage('MainMenuManagers', 'OnWebCallback');
+        }
+    } catch (error) {}
+}
+    </script>
+    <script src="js/firebase-app.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script src="js/firebase-firestore.js"></script>
+    <script src="js/firebase-remote-config.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/firebase-config.js"></script>
+
+    <script>
+      var hostname = window.location.hostname;
+      if (hostname.indexOf("dev1v1") >= 0 || hostname.indexOf("dev.1v1") >= 0 || hostname.indexOf("test1v1") >= 0 || hostname.indexOf("test.1v1") >= 0 || hostname.indexOf("localhost") >= 0) {
+        initializeFireBaseDev();
+      } else {
+        initializeFireBase();
+      }
+
+      initRemoteConfig();
+    </script>
+
+    <script src="js/windowResize.js"></script>
+    <script src="js/macUserAgent.js"></script>
+    <script src="js/visibilityChangeListener.js"></script>
+    <script>
+      function onUnityReady() {
+        sendConfig();
+      }
+
+      fixMacUserAgent();
+    </script>
+</body>
+</html>
